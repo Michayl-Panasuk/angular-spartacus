@@ -80,6 +80,27 @@ export class OrderHistoryService implements OrderHistoryFacade {
   }
 
   /**
+   * Returns unit order history list
+   */
+  getUnitOrderHistoryList(
+    pageSize: number
+  ): Observable<OrderHistoryList | undefined> {
+    return this.store.pipe(
+      select(OrderSelectors.getOrdersState),
+      tap((orderListState) => {
+        const attemptedLoad =
+          orderListState.loading ||
+          orderListState.success ||
+          orderListState.error;
+        if (!attemptedLoad) {
+          this.loadUnitOrderList(pageSize);
+        }
+      }),
+      map((orderListState) => orderListState.value)
+    );
+  }
+
+  /**
    * Returns a loaded flag for order history list
    */
   getOrderHistoryListLoaded(): Observable<boolean> {
@@ -117,6 +138,35 @@ export class OrderHistoryService implements OrderHistoryFacade {
         );
       },
       () => {
+        // TODO: for future releases, refactor this part to thrown errors
+      }
+    );
+  }
+
+  /**
+   * Retrieves an unit order list
+   * @param pageSize page size
+   * @param currentPage current page
+   * @param sort sort
+   */
+  loadUnitOrderList(
+    pageSize: number,
+    currentPage?: number,
+    sort?: string
+  ): void {
+    this.userIdService.takeUserId(true).subscribe(
+      (userId) => {
+        this.store.dispatch(
+          new OrderActions.LoadUnitOrders({
+            userId,
+            pageSize,
+            currentPage,
+            sort,
+          })
+        );
+      },
+      () => {
+        throw new Error('Could not find conditions not met');
         // TODO: for future releases, refactor this part to thrown errors
       }
     );

@@ -9,13 +9,19 @@ export const initialState: OrderHistoryList = {
 
 export function reducer(
   state = initialState,
-  action: OrderActions.UserOrdersAction
+  action: OrderActions.UserOrdersAction |  OrderActions.UnitOrdersAction
 ): OrderHistoryList {
   switch (action.type) {
     case OrderActions.LOAD_USER_ORDERS_SUCCESS: {
       return action.payload ? action.payload : initialState;
     }
     case OrderActions.LOAD_USER_ORDERS_FAIL: {
+      return initialState;
+    }
+    case OrderActions.LOAD_UNIT_ORDERS_SUCCESS: {
+      return action.payload ? action.payload : initialState;
+    }
+    case OrderActions.LOAD_UNIT_ORDERS_FAIL: {
       return initialState;
     }
   }

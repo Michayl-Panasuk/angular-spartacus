@@ -13,6 +13,10 @@ class MockOrderHistoryAdapter implements OrderHistoryAdapter {
     (userId) => of(`orderHistory-${userId}`)
   );
 
+  loadUnitHistory = createSpy('OrderHistoryAdapter.loadUnitHistory').and.callFake(
+    (userId) => of(`unitOrderHistory-${userId}`)
+  );
+
   getConsignmentTracking = createSpy(
     'OrderHistoryAdapter.getConsignmentTracking'
   ).and.callFake((orderCode, consignmentCode, userId) =>

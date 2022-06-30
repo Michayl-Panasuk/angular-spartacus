@@ -60,4 +60,31 @@ export class OrdersEffect {
         })
       )
   );
+
+  loadUnitOrders$: Observable<OrderActions.UnitOrdersAction> = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(OrderActions.LOAD_UNIT_ORDERS),
+        map((action: OrderActions.LoadUnitOrders) => action.payload),
+        switchMap((payload) => {
+          return this.orderConnector
+            .getUnitHistory(
+              payload.userId,
+              payload.pageSize,
+              payload.currentPage,
+              payload.sort
+            )
+            .pipe(
+              map((orders: OrderHistoryList) => {
+                return new OrderActions.LoadUnitOrdersSuccess(orders);
+              }),
+              catchError((error) =>
+                of(
+                  new OrderActions.LoadUnitOrdersFail(normalizeHttpError(error))
+                )
+              )
+            );
+        })
+      )
+  );
 }

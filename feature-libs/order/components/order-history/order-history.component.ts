@@ -28,10 +28,20 @@ export class OrderHistoryComponent implements OnDestroy {
 
   private PAGE_SIZE = 5;
   sortType: string;
+  showUnitOrders = true;
 
   orders$: Observable<OrderHistoryList | undefined> = this.orderHistoryFacade
     .getOrderHistoryList(this.PAGE_SIZE)
     .pipe(
+      tap((orders: OrderHistoryList | undefined) => {
+        if (orders?.pagination?.sort) {
+          this.sortType = orders.pagination.sort;
+        }
+      })
+    );
+
+  unitOrders$: Observable<OrderHistoryList | undefined> =
+    this.orderHistoryFacade.getUnitOrderHistoryList(this.PAGE_SIZE).pipe(
       tap((orders: OrderHistoryList | undefined) => {
         if (orders?.pagination?.sort) {
           this.sortType = orders.pagination.sort;
@@ -100,10 +110,16 @@ export class OrderHistoryComponent implements OnDestroy {
   }
 
   private fetchOrders(event: { sortCode: string; currentPage: number }): void {
-    this.orderHistoryFacade.loadOrderList(
-      this.PAGE_SIZE,
-      event.currentPage,
-      event.sortCode
-    );
+    return this.showUnitOrders
+      ? this.orderHistoryFacade.loadUnitOrderList(
+          this.PAGE_SIZE,
+          event.currentPage,
+          event.sortCode
+        )
+      : this.orderHistoryFacade.loadOrderList(
+          this.PAGE_SIZE,
+          event.currentPage,
+          event.sortCode
+        );
   }
 }

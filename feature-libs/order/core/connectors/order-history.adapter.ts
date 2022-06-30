@@ -35,6 +35,22 @@ export abstract class OrderHistoryAdapter {
   ): Observable<OrderHistoryList>;
 
   /**
+   * Abstract method used to load unit order history for an user.
+   *
+   * @param userId The `userId` for given user
+   * @param orgUnitId The organization unit to get orders from
+   * @param pageSize
+   * @param currentPage
+   * @param sort Sorting method
+   */
+  abstract loadUnitHistory(
+    userId: string,
+    pageSize?: number,
+    currentPage?: number,
+    sort?: string
+  ): Observable<OrderHistoryList>;
+
+  /**
    * Abstract method used to get consignment tracking details
    * @param orderCode an order code
    * @param consignmentCode a consignment code

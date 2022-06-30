@@ -2,6 +2,12 @@ import { OccEndpoint } from '@spartacus/core';
 
 export interface OrderOccEndpoints {
   /**
+   * Endpoint for the list of user unit orders
+   *
+   * @member {string}
+   */
+  unitOrderHistory?: string | OccEndpoint;
+  /**
    * Endpoint for the list of one user's orders
    *
    * @member {string}

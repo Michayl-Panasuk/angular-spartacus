@@ -5,6 +5,7 @@ export const defaultOccOrderConfig: OccConfig = {
     occ: {
       endpoints: {
         /* eslint-disable max-len */
+        unitOrderHistory: 'users/${userId}/orders?scope=UNIT',
         orderHistory: 'users/${userId}/orders',
         orderDetail: 'users/${userId}/orders/${orderId}?fields=FULL',
         consignmentTracking:

@@ -1,6 +1,6 @@
 <ng-container
   *ngIf="{
-    orderHistory: orders$ | async,
+    orderHistory: (showUnitOrders ? unitOrders$ : orders$) | async,
     replenishmentOrder: hasReplenishmentOrder$ | async
   } as type"
 >
@@ -135,7 +135,8 @@
                     "
                     class="cx-order-history-value"
                   >
-                    {{ order?.placedBy?.firstName}} {{order?.placedBy?.lastName}}</a
+                    {{ order?.placedBy?.firstName }}
+                    {{ order?.placedBy?.lastName }}</a
                   >
                 </td>
                 <td class="cx-order-history-unit">

@@ -126,4 +126,23 @@ export abstract class OrderHistoryFacade {
    * Resets the cancel order process flags
    */
   abstract resetCancelOrderProcessState(): void;
+
+  /**
+   * Returns unit order history list
+   */
+  abstract getUnitOrderHistoryList(
+    pageSize: number
+  ): Observable<OrderHistoryList | undefined>;
+
+  /**
+   * Retrieves an order list
+   * @param pageSize page size
+   * @param currentPage current page
+   * @param sort sort
+   */
+  abstract loadUnitOrderList(
+    pageSize: number,
+    currentPage?: number,
+    sort?: string
+  ): void;
 }
