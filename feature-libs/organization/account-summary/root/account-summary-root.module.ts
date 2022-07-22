@@ -14,7 +14,7 @@ export function defaultAccountSummaryComponentsConfig(): CmsConfig {
     featureModules: {
       [ACCOUNT_SUMMARY_FEATURE]: {
         cmsComponents: [
-          'AccountSummaryListComponent',
+          'ManageAccountSummaryListComponent',
           'AccountSummaryHeaderComponent',
           'AccountSummaryDocumentComponent'
         ],

@@ -1,22 +1,24 @@
-//TODO - add styles in allowlist
+@import './account-summary-document';
 
-// $account-summary-components-allowlist: !default;
-// $skipComponentStyles: () !default;
-
-@each $selector in $account-summary-components-allowlist {
-  #{$selector} {
-    // skip selectors if they're added to the $skipComponentStyles list
-    @if (index($skipComponentStyles, $selector) == null) {
-      @extend %#{$selector} !optional;
-    }
-  }
-}
-
-// add body specific selectors
-body {
-  @each $selector in $account-summary-components-allowlist {
-    @if (index($skipComponentStyles, $selector) == null) {
-      @extend %#{$selector}__body !optional;
-    }
-  }
-}
+////TODO - add styles in allowlist
+//
+//// $account-summary-components-allowlist: !default;
+//// $skipComponentStyles: () !default;
+//
+//@each $selector in $account-summary-components-allowlist {
+//  #{$selector} {
+//    // skip selectors if they're added to the $skipComponentStyles list
+//    @if (index($skipComponentStyles, $selector) == null) {
+//      @extend %#{$selector} !optional;
+//    }
+//  }
+//}
+//
+//// add body specific selectors
+//body {
+//  @each $selector in $account-summary-components-allowlist {
+//    @if (index($skipComponentStyles, $selector) == null) {
+//      @extend %#{$selector}__body !optional;
+//    }
+//  }
+//}

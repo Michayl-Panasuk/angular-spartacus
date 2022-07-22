@@ -10,6 +10,9 @@ export class AccountSummaryDocumentComponent implements OnInit {
 
   currentUnitCode: string;
   documents: Array<AccountSummaryDocument> = [];
+  pagination = undefined;
+  sorts = undefined;
+
 
   constructor(
     private routingService: RoutingService,
@@ -25,8 +28,8 @@ export class AccountSummaryDocumentComponent implements OnInit {
     this.accountSummaryDetailsService.getDocumentData(this.currentUnitCode).subscribe(response => {
       if (response) {
         this.documents = response.documents;
-        // response.pagination ToDo: add form control for pages
-        // response.sorts ToDo: add form control for sort
+        this.pagination = response.pagination; // ToDo: add form control for pages
+        this.sorts = response.sorts; // ToDo: add form control for sort
       }
     });
   }

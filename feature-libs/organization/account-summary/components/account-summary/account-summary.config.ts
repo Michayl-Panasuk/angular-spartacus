@@ -7,7 +7,7 @@ import { AccountSummaryDocumentComponent } from "./details";
 
 export const accountSummaryCmsConfig: CmsConfig = {
   cmsComponents: {
-    AccountSummaryListComponent: {
+    ManageAccountSummaryListComponent: {
       component: AccountSummaryListComponent,
       childRoutes: {
         parent: {
