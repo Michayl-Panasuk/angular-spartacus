@@ -9,8 +9,11 @@
 
     <!-- BODY -->
     <div class="cx-account-summary-document-body">
+<!--      <ng-container-->
+<!--        *ngIf="pagination?.totalCount > 0; else noDocument"-->
+<!--      >-->
       <ng-container
-        *ngIf="pagination?.totalCount > 0; else noDocument"
+        *ngIf="true; else noDocument"
       >
         <!-- Select Form and Pagination Top -->
 <!--        <div class="cx-account-summary-document-sort top">-->
@@ -74,7 +77,7 @@
               </div>
               <div class="cx-account-summary-document-value">{{ document?.documentNumber }}</div>
             </td>
-            <td class="cx-account-summary-document-code">
+            <td class="cx-account-summary-document-type">
               <div class="cx-account-summary-document-label">
                 {{ 'orgAccountSummary.document.type' | cxTranslate }}
               </div>
@@ -84,25 +87,29 @@
               <div class="cx-account-summary-document-label">
                 {{ 'orgAccountSummary.document.date' | cxTranslate }}
               </div>
-              <div class="cx-account-summary-document-value">{{ document?.date }}</div>
+              <div class="cx-account-summary-document-value">
+                {{ document?.date | cxDate: 'longDate' }}
+              </div>
             </td>
             <td class="cx-account-summary-document-date">
               <div class="cx-account-summary-document-label">
                 {{ 'orgAccountSummary.document.dueDate' | cxTranslate }}
               </div>
-              <div class="cx-account-summary-document-value">{{ document?.dueDate }}</div>
+              <div class="cx-account-summary-document-value">
+                {{ document?.dueDate | cxDate: 'longDate' }}
+              </div>
             </td>
             <td class="cx-account-summary-document-monetary">
               <div class="cx-account-summary-document-label">
                 {{ 'orgAccountSummary.document.originalAmount' | cxTranslate }}
               </div>
-              <div class="cx-account-summary-document-value">{{ document?.amount }}</div>
+              <div class="cx-account-summary-document-value">{{ document?.formattedAmount }}</div>
             </td>
 <!--            <td class="cx-account-summary-document-monetary">-->
 <!--              <div class="cx-account-summary-document-label">-->
 <!--                {{ 'orgAccountSummary.document.openAmount' | cxTranslate }}-->
 <!--              </div>-->
-<!--              <div class="cx-account-summary-document-value">{{ document?.openAmount }}</div>-->
+<!--              <div class="cx-account-summary-document-value">{{ document?.formattedOpenAmount }}</div>-->
 <!--            </td>-->
 <!--            <td class="cx-account-summary-document-status">-->
 <!--              <div class="cx-account-summary-document-label">-->
@@ -110,11 +117,11 @@
 <!--              </div>-->
 <!--              <div class="cx-account-summary-document-value">{{ document?.status }}</div>-->
 <!--            </td>-->
-<!--            <td class="cx-account-summary-document-code">-->
+<!--            <td class="cx-account-summary-document-attachment">-->
 <!--              <div class="cx-account-summary-document-label">-->
 <!--                {{ 'orgAccountSummary.document.attachment' | cxTranslate }}-->
 <!--              </div>-->
-<!--              <div class="cx-account-summary-document-value">&nbsp;</div>-->
+<!--              <div class="cx-account-summary-document-value">{{ document?.documentMedia ? 'View' : '&nbsp;'}}</div>-->
 <!--            </td>-->
           </tr>
           </tbody>
@@ -135,38 +142,8 @@
 
       <!-- NO DOCUMENT CONTAINER -->
       <ng-template #noDocument>
-        <div
-          *ngIf="isLoaded$ | async"
-          [ngClass]="
-            type.replenishmentOrder
-              ? 'cx-replenishment-details-order-history-no-order'
-              : 'cx-account-summary-document-no-document'
-          "
-        >
-          <div>
-            <ng-container *ngIf="type.replenishmentOrder; else otherOrder">
-              <div>{{ 'orderHistory.notFound' | cxTranslate }}</div>
-            </ng-container>
-
-            <ng-template #otherOrder>
-              <div>{{ 'orderHistory.noOrders' | cxTranslate }}</div>
-              <a
-                [routerLink]="{ cxRoute: 'home' } | cxUrl"
-                routerLinkActive="active"
-                class="btn btn-primary btn-block"
-              >{{ 'orderHistory.startShopping' | cxTranslate }}</a
-              >
-            </ng-template>
-          </div>
-        </div>
+        No Documents
       </ng-template>
     </div>
-
-
-
-
-
-
-
   </div>
 </ng-container>

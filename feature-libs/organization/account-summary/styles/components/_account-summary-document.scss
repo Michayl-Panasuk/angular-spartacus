@@ -70,6 +70,18 @@ cx-account-summary-document {
 
   .cx-account-summary-document-code {
     .cx-account-summary-document-value {
+      text-decoration: none;
+    }
+  }
+
+  .cx-account-summary-document-type {
+    .cx-account-summary-document-value {
+      text-decoration: none;
+    }
+  }
+
+  .cx-account-summary-document-attachment {
+    .cx-account-summary-document-value {
       text-decoration: underline;
     }
   }

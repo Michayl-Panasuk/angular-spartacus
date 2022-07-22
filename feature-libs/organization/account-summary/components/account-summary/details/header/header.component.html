@@ -1,37 +1,9 @@
-<div *ngIf="headerDetails$ | async as headerDetails">
-  <div>
-    <span style="font-weight: bold">{{ 'orgAccountSummary.details.uid' | cxTranslate }}</span><br/>
-    <span>{{headerDetails?.b2BUnitWsDTO?.uid}}</span>
-  </div>
-  <div>
-    <span style="font-weight: bold">{{ 'orgAccountSummary.details.name' | cxTranslate }}</span><br/>
-    <span>{{headerDetails?.b2BUnitWsDTO?.name}}</span>
-  </div>
-  <div *ngIf="headerDetails?.billingAddress as address">
-    <span style="font-weight: bold">{{ 'orgAccountSummary.details.address' | cxTranslate }}</span><br/>
-    <span>{{address?.fullnameWithTitle}}</span><br/>
-    <span>{{address?.formattedAddress}}</span><br/>
-    <span>{{address?.country?.name}}</span>
-  </div>
-  <div>
-    <span style="font-weight: bold"> {{ 'orgAccountSummary.details.creditRep' | cxTranslate }}</span><br/>
-    <span>{{headerDetails?.accountManagerName}}</span>
-  </div>
-  <div>
-    <span style="font-weight: bold">{{ 'orgAccountSummary.details.creditLine' | cxTranslate }}</span><br/>
-    <span>{{headerDetails?.formattedCreditLimit}}</span>
-  </div>
-  <div>
-    <span style="font-weight: bold"> {{ 'orgAccountSummary.details.currentBalance' | cxTranslate }}</span><br/>
-    <span>{{headerDetails?.amountBalanceData?.currentBalance}}</span>
-  </div>
+<div>
+  <h2>
+    {{ 'orgAccountSummary.details.header' | cxTranslate }}
+  </h2>
 </div>
-
-
-<!--  !!!!! ----- ///// \\\\\ +++++ TRYING SOME NEW STUFF +++++ ///// \\\\\ ----- !!!!! -->
-
-
-<div class="cx-order-summary" *ngIf="headerDetails$ | async as headerDetails">
+<div class="cx-account-summary" *ngIf="headerDetails$ | async as headerDetails">
   <div class="container">
 
     <div class="cx-summary-card">
@@ -79,22 +51,18 @@
     </div>
 
     <div class="cx-summary-card">
+      <div style="border: 1px solid black; padding: 1rem; margin-top: 1rem">
+        <div *ngFor="let rangeBalance of headerDetails?.amountBalanceData?.dueBalance" style="padding-bottom: 1rem">
+          <span style="font-weight: bold">{{rangeBalance?.key?.minBoundery}}</span>
+          <span style="font-weight: bold">{{rangeBalance?.key?.maxBoundery ? '-' + rangeBalance?.key?.maxBoundery : '+'}}</span>
+          <span style="font-weight: bold"> Days</span><br/>
+          <span>{{rangeBalance?.value}}</span>
+        </div>
 
-      <div>
-        <span style="font-weight: bold">{{ 'orgAccountSummary.details.openBalance' | cxTranslate }}</span><br/>
-        <span>{{headerDetails?.amountBalanceData?.openBalance}}</span>
-      </div>
-
-      <div *ngFor="let rangeBalance of headerDetails?.amountBalanceData?.dueBalance">
-        <span style="font-weight: bold">{{rangeBalance?.key?.minBoundery}}</span>
-        <span style="font-weight: bold">{{rangeBalance?.key?.maxBoundery ? '-' + rangeBalance?.key?.maxBoundery : '+'}}</span>
-        <span style="font-weight: bold"> Days</span><br/>
-        <span>{{rangeBalance?.value}}</span>
-      </div>
-
-      <div>
-        <span style="font-weight: bold">{{ 'orgAccountSummary.details.pastDueBalance' | cxTranslate }}</span><br/>
-        <span>{{headerDetails?.amountBalanceData?.openBalance}}</span>
+        <div style="border-top: 1px solid black; padding-top: 1rem">
+          <span style="font-weight: bold">{{ 'orgAccountSummary.details.pastDueBalance' | cxTranslate }}</span><br/>
+          <span>{{headerDetails?.amountBalanceData?.openBalance}}</span>
+        </div>
       </div>
 
     </div>

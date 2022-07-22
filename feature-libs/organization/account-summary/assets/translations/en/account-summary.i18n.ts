@@ -3,6 +3,7 @@ export const accountSummary = {
     header: 'All account summary units ({{count}})',
     name: 'Name',
     details: {
+      header: 'Account Summary Details',
       uid: 'ID',
       name: 'Name',
       address: 'Address',
