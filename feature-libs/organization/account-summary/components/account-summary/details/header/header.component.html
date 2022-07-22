@@ -25,129 +25,79 @@
     <span style="font-weight: bold"> {{ 'orgAccountSummary.details.currentBalance' | cxTranslate }}</span><br/>
     <span>{{headerDetails?.amountBalanceData?.currentBalance}}</span>
   </div>
-  <div>
-    <span style="font-weight: bold">{{ 'orgAccountSummary.details.openBalance' | cxTranslate }}</span><br/>
-    <span>{{headerDetails?.amountBalanceData?.openBalance}}</span>
-  </div>
-  <div *ngFor="let rangeBalance of headerDetails?.amountBalanceData?.dueBalance">
-    <span style="font-weight: bold">{{rangeBalance?.key?.minBoundery}}</span>
-    <span style="font-weight: bold">{{rangeBalance?.key?.maxBoundery ? '-' + rangeBalance?.key?.maxBoundery : '+'}}</span>
-    <span style="font-weight: bold"> Days</span><br/>
-    <span>{{rangeBalance?.value}}</span>
-  </div>
-  <div>
-    <span style="font-weight: bold">{{ 'orgAccountSummary.details.pastDueBalance' | cxTranslate }}</span><br/>
-    <span>{{headerDetails?.amountBalanceData?.openBalance}}</span>
-  </div>
 </div>
 
-<!--<div class="cx-order-summary">-->
-<!--  <div class="container">-->
-<!--    <ng-container *ngIf="order.replenishmentOrderCode; else otherOrder">-->
-<!--      <div class="cx-summary-card">-->
-<!--        <cx-card-->
-<!--          [content]="-->
-<!--            getReplenishmentCodeCardContent(order?.replenishmentOrderCode)-->
-<!--              | async-->
-<!--          "-->
-<!--        ></cx-card>-->
 
-<!--        <cx-card-->
-<!--          [content]="getReplenishmentActiveCardContent(order?.active) | async"-->
-<!--        ></cx-card>-->
-<!--      </div>-->
+<!--  !!!!! ----- ///// \\\\\ +++++ TRYING SOME NEW STUFF +++++ ///// \\\\\ ----- !!!!! -->
 
-<!--      <div class="cx-summary-card">-->
-<!--        <cx-card-->
-<!--          [content]="-->
-<!--            getReplenishmentStartOnCardContent(order?.firstDate | cxDate)-->
-<!--              | async-->
-<!--          "-->
-<!--        ></cx-card>-->
 
-<!--        <cx-card-->
-<!--          [content]="-->
-<!--            getReplenishmentFrequencyCardContent(-->
-<!--              order?.trigger?.displayTimeTable-->
-<!--            ) | async-->
-<!--          "-->
-<!--        ></cx-card>-->
+<div class="cx-order-summary" *ngIf="headerDetails$ | async as headerDetails">
+  <div class="container">
 
-<!--        <cx-card-->
-<!--          [content]="-->
-<!--            getReplenishmentNextDateCardContent(-->
-<!--              order?.trigger?.activationTime | cxDate-->
-<!--            ) | async-->
-<!--          "-->
-<!--        ></cx-card>-->
-<!--      </div>-->
-<!--    </ng-container>-->
+    <div class="cx-summary-card">
 
-<!--    <ng-template #otherOrder>-->
-<!--      <div class="cx-summary-card">-->
-<!--        <cx-card-->
-<!--          [content]="getOrderCodeCardContent(order?.code) | async"-->
-<!--        ></cx-card>-->
+      <cx-card
+        [content]="getIdCardContent(headerDetails?.b2BUnitWsDTO?.uid) | async"
+      ></cx-card>
 
-<!--        <cx-card-->
-<!--          [content]="-->
-<!--            getOrderCurrentDateCardContent(order?.created | cxDate) | async-->
-<!--          "-->
-<!--        ></cx-card>-->
+      <cx-card
+        [content]="getNameCardContent(headerDetails?.b2BUnitWsDTO?.name) | async"
+      ></cx-card>
 
-<!--        <cx-card-->
-<!--          [content]="getOrderStatusCardContent(order.statusDisplay) | async"-->
-<!--        ></cx-card>-->
-<!--      </div>-->
-<!--    </ng-template>-->
+      <cx-card
+        [content]="getAddressCardContent(
+          headerDetails?.billingAddress?.fullnameWithTitle,
+          headerDetails?.billingAddress?.formattedAddress,
+          headerDetails?.billingAddress?.country?.name
+        ) | async"
+      ></cx-card>
 
-<!--    <ng-container-->
-<!--      *ngIf="order.purchaseOrderNumber || order.purchaseOrderNumber === ''"-->
-<!--    >-->
-<!--      <div class="cx-summary-card">-->
-<!--        <cx-card-->
-<!--          [content]="getPurchaseOrderNumber(order?.purchaseOrderNumber) | async"-->
-<!--        ></cx-card>-->
+    </div>
 
-<!--        <cx-card-->
-<!--          [content]="getMethodOfPaymentCardContent(order.paymentInfo) | async"-->
-<!--        ></cx-card>-->
+    <div class="cx-summary-card">
 
-<!--        <ng-container *ngIf="order.costCenter">-->
-<!--          <cx-card-->
-<!--            [content]="getCostCenterCardContent(order?.costCenter) | async"-->
-<!--          ></cx-card>-->
-<!--        </ng-container>-->
-<!--      </div>-->
-<!--    </ng-container>-->
+      <cx-card
+        [content]="getCreditRepCardContent(headerDetails?.accountManagerName) | async"
+      ></cx-card>
 
-<!--    <div class="cx-summary-card">-->
-<!--      <ng-container *ngIf="order.deliveryAddress">-->
-<!--        <cx-card-->
-<!--          [content]="getAddressCardContent(order?.deliveryAddress) | async"-->
-<!--        ></cx-card>-->
-<!--      </ng-container>-->
+      <cx-card
+        [content]="getCreditLineCardContent(headerDetails?.formattedCreditLimit) | async"
+      ></cx-card>
 
-<!--      <ng-container *ngIf="order.deliveryMode">-->
-<!--        <cx-card-->
-<!--          [content]="getDeliveryModeCardContent(order?.deliveryMode) | async"-->
-<!--        ></cx-card>-->
-<!--      </ng-container>-->
-<!--    </div>-->
+    </div>
 
-<!--    <ng-container *ngIf="order.paymentInfo">-->
-<!--      <div class="cx-summary-card">-->
-<!--        <cx-card-->
-<!--          [content]="getPaymentInfoCardContent(order?.paymentInfo) | async"-->
-<!--        ></cx-card>-->
+    <div class="cx-summary-card">
 
-<!--        <cx-card-->
-<!--          [content]="-->
-<!--            getBillingAddressCardContent(order?.paymentInfo?.billingAddress)-->
-<!--              | async-->
-<!--          "-->
-<!--        ></cx-card>-->
-<!--      </div>-->
-<!--    </ng-container>-->
-<!--  </div>-->
-<!--</div>-->
+      <cx-card
+        [content]="getCurrentBalanceCardContent(headerDetails?.amountBalanceData?.currentBalance) | async"
+      ></cx-card>
+
+      <cx-card
+        [content]="getOpenBalanceCardContent(headerDetails?.amountBalanceData?.openBalance) | async"
+      ></cx-card>
+
+    </div>
+
+    <div class="cx-summary-card">
+
+      <div>
+        <span style="font-weight: bold">{{ 'orgAccountSummary.details.openBalance' | cxTranslate }}</span><br/>
+        <span>{{headerDetails?.amountBalanceData?.openBalance}}</span>
+      </div>
+
+      <div *ngFor="let rangeBalance of headerDetails?.amountBalanceData?.dueBalance">
+        <span style="font-weight: bold">{{rangeBalance?.key?.minBoundery}}</span>
+        <span style="font-weight: bold">{{rangeBalance?.key?.maxBoundery ? '-' + rangeBalance?.key?.maxBoundery : '+'}}</span>
+        <span style="font-weight: bold"> Days</span><br/>
+        <span>{{rangeBalance?.value}}</span>
+      </div>
+
+      <div>
+        <span style="font-weight: bold">{{ 'orgAccountSummary.details.pastDueBalance' | cxTranslate }}</span><br/>
+        <span>{{headerDetails?.amountBalanceData?.openBalance}}</span>
+      </div>
+
+    </div>
+
+  </div>
+</div>
