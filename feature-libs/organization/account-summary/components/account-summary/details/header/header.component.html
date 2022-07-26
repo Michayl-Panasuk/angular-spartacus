@@ -51,18 +51,25 @@
     </div>
 
     <div class="cx-summary-card">
-      <div style="border: 1px solid black; padding: 1rem; margin-top: 1rem">
-        <div *ngFor="let rangeBalance of headerDetails?.amountBalanceData?.dueBalance" style="padding-bottom: 1rem">
-          <span style="font-weight: bold">{{rangeBalance?.key?.minBoundery}}</span>
-          <span style="font-weight: bold">{{rangeBalance?.key?.maxBoundery ? '-' + rangeBalance?.key?.maxBoundery : '+'}}</span>
-          <span style="font-weight: bold"> Days</span><br/>
-          <span>{{rangeBalance?.value}}</span>
+      <div [class.past-due-section]="pastDue?.length > 0">
+        <div *ngIf="pastDue?.length > 0" class="past-due-range-block">
+          <div *ngFor="let rangeBalance of pastDue" class="past-due-range-container">
+            <div class="past-due-range-date">
+              <span>{{rangeBalance?.key?.minBoundery}}</span>
+              <span>{{rangeBalance?.key?.maxBoundery ? '-' + rangeBalance?.key?.maxBoundery : '+'}}</span>
+              <span> Days</span>
+            </div>
+            <div class="past-due-range-value">
+              {{rangeBalance?.value}}
+            </div>
+          </div>
         </div>
 
-        <div style="border-top: 1px solid black; padding-top: 1rem">
-          <span style="font-weight: bold">{{ 'orgAccountSummary.details.pastDueBalance' | cxTranslate }}</span><br/>
-          <span>{{headerDetails?.amountBalanceData?.openBalance}}</span>
-        </div>
+<!--        <cx-card-->
+<!--          [content]="getPastDueBalanceCardContent(headerDetails?.amountBalanceData?.openBalance) | async"-->
+<!--        ></cx-card>-->
+        <div class="past-due-balance-text cx-card-title">{{ 'orgAccountSummary.details.pastDueBalance' | cxTranslate }}</div>
+        <div>{{headerDetails?.amountBalanceData?.openBalance}}</div>
       </div>
 
     </div>

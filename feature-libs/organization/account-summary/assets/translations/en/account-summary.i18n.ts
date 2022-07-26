@@ -15,14 +15,14 @@ export const accountSummary = {
     },
     document: {
       header: 'Documents',
-      id: 'Document #',
+      id: 'Document Number',
       type: 'Document Type',
-      date: 'Document Date',
-      dueDate: 'Due Date',
+      date: 'Created On',
+      dueDate: 'Due On',
       originalAmount: 'Original Amount',
       openAmount: 'Open Amount',
       status: 'Status',
-      attachment: 'Attachment'
+      attachment: ''
     },
     //TODO
     hint: ""

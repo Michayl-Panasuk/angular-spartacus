@@ -1,4 +1,34 @@
 cx-account-summary-header {
+
+  .past-due-section {
+    border: 1px solid black;
+    padding: 1rem; margin-top: 1rem;
+  }
+
+  .past-due-range-block {
+    border-bottom: 1px solid black;
+  }
+
+  .past-due-range-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding-bottom: 1rem;
+
+    .past-due-range-date {
+      text-align: start;
+      font-weight: bold;
+    }
+
+    .past-due-range-value {
+      text-align: end;
+    }
+  }
+
+  .past-due-balance-text {
+    padding-top: 1rem;
+    font-size: $font-size-base * 1.125;
+  }
+
   .cx-account-summary {
     background-color: var(--cx-color-background);
 

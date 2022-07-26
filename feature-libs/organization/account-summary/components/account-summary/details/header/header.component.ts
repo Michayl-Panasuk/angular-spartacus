@@ -9,6 +9,8 @@ import {
 import { AccountSummaryDetails } from "../../../../core";
 import {filter, map } from "rxjs/operators";
 
+const notAvailable = 'n/a';
+
 @Component({
   selector: 'cx-account-summary-header',
   templateUrl: './header.component.html',
@@ -18,6 +20,7 @@ export class HeaderComponent implements OnInit {
   currentUnitCode: string;
   headerDetails$: Observable<AccountSummaryDetails>
   response: any;
+  pastDue: any[];
 
   constructor(
     private routingService: RoutingService,
@@ -32,7 +35,7 @@ export class HeaderComponent implements OnInit {
     });
 
     this.headerDetails$ = this.accountSummaryDetailsService.getHeaderData(this.currentUnitCode);
-    this.accountSummaryDetailsService.getDocumentData(this.currentUnitCode).subscribe(res => console.log(res));
+    this.headerDetails$.subscribe(hd => this.pastDue = hd?.amountBalanceData?.dueBalance);
   }
 
   getIdCardContent(id: string): Observable<Card> {
@@ -67,20 +70,18 @@ export class HeaderComponent implements OnInit {
 
   getCreditRepCardContent(creditRep: string): Observable<Card> {
     return this.translation.translate('orgAccountSummary.details.creditRep').pipe(
-      filter(() => Boolean(creditRep)),
       map((creditRepTitle) => ({
         title: creditRepTitle,
-        text: [creditRep],
+        text: [creditRep || notAvailable],
       }))
     );
   }
 
   getCreditLineCardContent(creditLine: string): Observable<Card> {
     return this.translation.translate('orgAccountSummary.details.creditLine').pipe(
-      filter(() => Boolean(creditLine)),
       map((creditLineTitle) => ({
         title: creditLineTitle,
-        text: [creditLine],
+        text: [creditLine || notAvailable],
       }))
     );
   }
@@ -101,6 +102,15 @@ export class HeaderComponent implements OnInit {
       map((openBalanceTitle) => ({
         title: openBalanceTitle,
         text: [openBalance],
+      }))
+    );
+  }
+
+  getPastDueBalanceCardContent(pastDueBalance: string): Observable<Card> {
+    return this.translation.translate('orgAccountSummary.details.pastDueBalance').pipe(
+      map((pastDueBalanceTitle) => ({
+        title: pastDueBalanceTitle,
+        text: [pastDueBalance],
       }))
     );
   }
